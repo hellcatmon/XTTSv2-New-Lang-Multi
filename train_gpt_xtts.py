@@ -236,14 +236,14 @@ if __name__ == "__main__":
     
 
     trainer_out_path = train_gpt(
-        metadatas=args.metadatas,
-        output_path=args.output_path,
-        num_epochs=args.num_epochs,
-        batch_size=args.batch_size,
-        grad_acumm=args.grad_acumm,
-        weight_decay=args.weight_decay,
-        lr=args.lr,
-        max_text_length=args.max_text_length,
+        metadatas=args["metadatas"],
+        output_path=args["output_path"],
+        num_epochs=args["num_epochs"],
+        batch_size=args["batch_size"],
+        grad_acumm=args["grad_acumm"],
+        weight_decay=args["weight_decay"],
+        lr=args["lr"],
+        max_text_length=args["max_text_length"],
         max_audio_length=args.max_audio_length,
         save_step=args.save_step
     )

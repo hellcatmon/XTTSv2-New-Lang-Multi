@@ -215,11 +215,11 @@ if __name__ == "__main__":
     }
 
     trainer_out_path = train(
-        language=args.language,
-        train_csv_path=args.train_csv_path,
-        eval_csv_path=args.eval_csv_path,
-        output_path=args.output_path,
-        num_epochs=args.num_epochs,
-        batch_size=args.batch_size,
-        lr=args.lr
+        language=args["language"],
+        train_csv_path=args["train_csv_path"],
+        eval_csv_path=args["eval_csv_path"],
+        output_path=args["output_path"],
+        num_epochs=args["num_epochs"],
+        batch_size=args["batch_size"],
+        lr=args["lr"]
     )
