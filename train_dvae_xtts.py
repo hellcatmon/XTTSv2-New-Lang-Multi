@@ -201,9 +201,18 @@ def train(output_path, train_csv_path, eval_csv_path="", language="en", lr=5e-6,
 
 
 if __name__ == "__main__":
-    parser = HfArgumentParser(DVAETrainerArgs)
+    #parser = HfArgumentParser(DVAETrainerArgs)
 
-    args = parser.parse_args_into_dataclasses()[0]
+    #args = parser.parse_args_into_dataclasses()[0]
+    args = {
+        "output_path": os.getenv("OUTPUT_PATH") if os.getenv("OUTPUT_PATH") else print("OUTPUT_PATH is not set. Path to pretrained + checkpoint model is needed"),
+        "train_csv_path": os.getenv("TRAIN_CSV_PATH") if os.getenv("TRAIN_CSV_PATH") else print("TRAIN_CSV_PATH is not set. Path to train metadata file is needed"),
+        "eval_csv_path": os.getenv("EVAL_CSV_PATH") if os.getenv("EVAL_CSV_PATH") else print("EVAL_CSV_PATH is not set. Path to eval metadata file is needed"),
+        "language": os.getenv("LANGUAGE") if os.getenv("LANGUAGE") else print("LANGUAGE is not set. Language in your dataset is needed"),
+        "num_epochs": int(os.getenv("NUM_EPOCHS") if os.getenv("NUM_EPOCHS") else print("NUM_EPOCHS is not set. Number of epochs is needed")),
+        "batch_size": int(os.getenv("BATCH_SIZE") if os.getenv("BATCH_SIZE") else print("BATCH_SIZE is not set. Batch size is needed")),
+        "lr": float(os.getenv("LR") if os.getenv("LR") else print("LR is not set. Learning rate is needed"))
+    }
 
     trainer_out_path = train(
         language=args.language,

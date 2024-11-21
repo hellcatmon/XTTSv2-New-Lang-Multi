@@ -54,7 +54,7 @@ def train_gpt(metadatas, num_epochs, batch_size, grad_acumm, output_path, max_au
     OUT_PATH = output_path
 
     # Training Parameters
-    OPTIMIZER_WD_ONLY_ON_WEIGHTS = True  # for multi-gpu training please make it False
+    OPTIMIZER_WD_ONLY_ON_WEIGHTS = False  # for multi-gpu training please make it False
     START_WITH_EVAL = False  # if True it will star with evaluation
     BATCH_SIZE = batch_size  # set here the batch size
     GRAD_ACUMM_STEPS = grad_acumm  # set here the grad accumulation steps
@@ -197,8 +197,9 @@ def train_gpt(metadatas, num_epochs, batch_size, grad_acumm, output_path, max_au
             grad_accum_steps=GRAD_ACUMM_STEPS
         ),
         config,
-        output_path=os.path.join(output_path, "run", "training"),
-        model=model,
+        outut_path=os.path.join(output_path, "GPT_XTTS_FT"),
+        #outut_path=os.path.join(output_path, "run", "training"),
+        model=model, 
         train_samples=train_samples,
         eval_samples=eval_samples,
     )
@@ -218,8 +219,21 @@ def train_gpt(metadatas, num_epochs, batch_size, grad_acumm, output_path, max_au
     return trainer_out_path
 
 if __name__ == "__main__":
-    parser = create_xtts_trainer_parser()
-    args = parser.parse_args()
+    #parser = create_xtts_trainer_parser()
+    #args = parser.parse_args()
+    args = {
+        "output_path": os.getenv("OUTPUT_PATH") if os.getenv("OUTPUT_PATH") else print("OUTPUT_PATH is not set. Path to pretrained + checkpoint model"),
+        "metadatas": os.getenv("METADATAS") if os.getenv("METADATAS") else print("METADATAS is not set. train_csv_path,eval_csv_path,language"),
+        "num_epochs": os.getenv("NUM_EPOCHS") if os.getenv("NUM_EPOCHS") else print("NUM_EPOCHS is not set. Number of epochs"),
+        "batch_size": os.getenv("BATCH_SIZE") if os.getenv("BATCH_SIZE") else print("BATCH_SIZE is not set. Mini batch size"),
+        "grad_acumm": os.getenv("GRAD_ACUMM") if os.getenv("GRAD_ACUMM") else print("GRAD_ACUMM is not set. Grad accumulation steps"),
+        "weight_decay": os.getenv("WEIGHT_DECAY") if os.getenv("WEIGHT_DECAY") else print("WEIGHT_DECAY is not set. Weight decay"),
+        "lr": os.getenv("LR") if os.getenv("LR") else print("LR is not set. Learning rate"),
+        "max_text_length": os.getenv("MAX_TEXT_LENGTH") if os.getenv("MAX_TEXT_LENGTH") else print("MAX_TEXT_LENGTH is not set. Max text length"),
+        "max_audio_length": os.getenv("MAX_AUDIO_LENGTH") if os.getenv("MAX_AUDIO_LENGTH") else print("MAX_AUDIO_LENGTH is not set. Max audio length"),
+        "save_step": os.getenv("SAVE_STEP") if os.getenv("SAVE_STEP") else print("SAVE_STEP is not set. Save step")
+    }
+    
 
     trainer_out_path = train_gpt(
         metadatas=args.metadatas,
