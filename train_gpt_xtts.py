@@ -223,7 +223,7 @@ if __name__ == "__main__":
     #args = parser.parse_args()
     args = {
         "output_path": os.getenv("OUTPUT_PATH") if os.getenv("OUTPUT_PATH") else print("OUTPUT_PATH is not set. Path to pretrained + checkpoint model"),
-        "metadatas": os.getenv("METADATAS") if os.getenv("METADATAS") else print("METADATAS is not set. train_csv_path,eval_csv_path,language"),
+        "metadatas": os.getenv("METADATAS").split(',') if os.getenv("METADATAS") else print("METADATAS is not set. train_csv_path,eval_csv_path,language"),
         "num_epochs": os.getenv("NUM_EPOCHS") if os.getenv("NUM_EPOCHS") else print("NUM_EPOCHS is not set. Number of epochs"),
         "batch_size": os.getenv("BATCH_SIZE") if os.getenv("BATCH_SIZE") else print("BATCH_SIZE is not set. Mini batch size"),
         "grad_acumm": os.getenv("GRAD_ACUMM") if os.getenv("GRAD_ACUMM") else print("GRAD_ACUMM is not set. Grad accumulation steps"),
